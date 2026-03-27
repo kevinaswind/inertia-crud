@@ -9,6 +9,7 @@ Route::inertia('/', 'Welcome', [
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+    Route::resource('posts', \App\Http\Controllers\PostController::class);
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
