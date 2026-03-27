@@ -25,7 +25,7 @@ defineOptions({
 });
 
 const page = usePage();
-const myPosts = computed<Post[]>(() => page.props.posts);
+const myPosts = computed<Post[]>(() => (page.props.posts as Post[]) ?? []);
 </script>
 
 <template>
