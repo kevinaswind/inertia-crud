@@ -6,6 +6,8 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class PostController extends Controller
 {
@@ -25,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return inertia()->render('posts/Create');
     }
 
     /**
@@ -33,7 +35,16 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['slug'] = Str::slug($data['title']);
+        
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('posts', 'public');
+        }
+
+        Auth::user()->posts()->create($data);
+        Inertia::flash('message', 'Post created successfully!');
+        return to_route('posts.index');
     }
 
     /**
