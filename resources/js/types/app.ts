@@ -1,9 +1,9 @@
 export type Post = {
-    id: number;
+    id: string;
     title: string;
     category: string;
     content: string;
     slug: string;
-    image: string;
+    image: string | null;
     is_published: boolean;
 };
